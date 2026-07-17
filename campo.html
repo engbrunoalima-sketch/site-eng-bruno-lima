@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruno Amaral de Lima | Trabalho de Campo</title>
+<meta name="description" content="Galeria de fotos reais registradas em campo. Instalações, upgrades e comissionamentos de telecomunicações e infraestrutura por Bruno Amaral de Lima.">
+
+<!-- Google Fonts: Inter and Plus Jakarta Sans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #030712;
+    --bg-gradient: radial-gradient(circle at 50% 0%, #0d1527 0%, #030712 100%);
+    --panel: rgba(17, 24, 39, 0.5);
+    --panel-hover: rgba(24, 32, 53, 0.6);
+    --panel-border: rgba(255, 255, 255, 0.05);
+    --panel-hover-border: rgba(20, 184, 166, 0.3);
+    --line: rgba(255, 255, 255, 0.08);
+    --amber: #f59e0b;
+    --amber-glow: rgba(245, 158, 11, 0.15);
+    --teal: #14b8a6;
+    --teal-glow: rgba(20, 184, 166, 0.15);
+    --text: #94a3b8;
+    --text-bright: #f1f5f9;
+    --success: #22c55e;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg);
+    background-image: var(--bg-gradient);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Ambient Glow Blobs */
+  .ambient-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(160px);
+    pointer-events: none;
+    opacity: 0.12;
+    z-index: -1;
+  }
+  .orb-1 {
+    background: var(--teal);
+    top: 5%;
+    left: -10%;
+  }
+  .orb-2 {
+    background: var(--amber);
+    top: 45%;
+    right: -10%;
+  }
+
+  h1, h2, h3, h4, nav, .label, .btn, figcaption, .chip {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header & Floating Nav */
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(3, 7, 18, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+
+  header.scrolled {
+    background: rgba(3, 7, 18, 0.85);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+
+  .logo {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-size: 1.05rem;
+    color: var(--text-bright);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  
+  .logo b {
+    color: var(--amber);
+    font-weight: 800;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    position: relative;
+    padding: 6px 0;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--teal);
+    transition: width 0.25s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--text-bright);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+  
+  .nav-links a.active {
+    color: var(--text-bright);
+  }
+  .nav-links a.active::after {
+    width: 100%;
+    background: var(--teal);
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: var(--amber);
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+  }
+
+  .label {
+    display: inline-block;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  /* Intro Section */
+  .intro-section {
+    padding: 80px 0 40px;
+  }
+
+  .intro-section h2 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .sub {
+    color: var(--text);
+    font-size: 1.05rem;
+    max-width: 800px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  /* Gallery Styling */
+  .gallery-section {
+    padding: 0 0 80px 0;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .gallery figure {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery figure:hover {
+    transform: translateY(-6px);
+    border-color: var(--amber);
+    box-shadow: 0 15px 35px rgba(245, 158, 11, 0.15);
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+  }
+
+  .gallery figure:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery figcaption {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 30%, rgba(3, 7, 18, 0.95) 90%);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .gallery figure:hover figcaption {
+    opacity: 1;
+  }
+
+  .gallery figcaption p {
+    color: var(--text-bright);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transform: translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery figcaption p b {
+    display: block;
+    color: var(--amber);
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .gallery figure:hover figcaption p {
+    transform: translateY(0);
+  }
+
+  /* Contact Section */
+  .contact {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .contact-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .contact-card h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+  }
+
+  .contact-method {
+    background: rgba(3, 7, 18, 0.4);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: block;
+  }
+
+  .contact-method:hover {
+    transform: translateY(-4px);
+    border-color: var(--teal);
+    background: rgba(20, 184, 166, 0.05);
+    box-shadow: 0 10px 25px rgba(20, 184, 166, 0.05);
+  }
+
+  .contact-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--text-bright);
+    transition: all 0.3s ease;
+  }
+
+  .contact-method:hover .contact-icon-wrapper {
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--teal);
+    border-color: rgba(20, 184, 166, 0.2);
+  }
+
+  .contact-method h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .contact-method p {
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    background: #02050c;
+    padding: 30px 0;
+    font-size: 0.85rem;
+  }
+
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text);
+  }
+
+  /* SVGs styles */
+  .icon-svg {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke-width: 2;
+    stroke: currentColor;
+    fill: none;
+    vertical-align: middle;
+  }
+
+  /* Lightbox styling */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1000;
+    padding: 24px;
+  }
+
+  #lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #lightbox-img {
+    max-width: 90%;
+    max-height: 75vh;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  #lightbox-caption {
+    margin-top: 20px;
+    color: var(--text-bright);
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    max-width: 600px;
+  }
+
+  #lightbox-caption b {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: var(--text-bright);
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.25s ease;
+  }
+
+  .lightbox-close:hover {
+    color: var(--amber);
+  }
+
+  /* Responsividade */
+  @media(max-width: 991px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media(max-width: 767px) {
+    nav {
+      flex-direction: column;
+      height: auto;
+      padding: 16px 0;
+      gap: 12px;
+    }
+    
+    .nav-links {
+      gap: 16px;
+    }
+    
+    footer .wrap {
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+    }
+  }
+
+  @media(max-width: 575px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+    
+    .intro-section h2 {
+      font-size: 2.1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient Glow Orbs -->
+<div class="ambient-glow orb-1"></div>
+<div class="ambient-glow orb-2"></div>
+
+<header id="site-header">
+  <div class="wrap">
+    <nav>
+      <a href="index.html" class="logo">
+        <div class="logo-dot"></div>
+        ENG. <b>BRUNO LIMA</b>
+      </a>
+      <div class="nav-links">
+        <a href="index.html#atuacao">Atuação</a>
+        <a href="index.html#trajetoria">Trajetória</a>
+        <a href="skills.html">Skills</a>
+        <a href="campo.html" class="active">Direto do Campo</a>
+        <a href="formacao.html">Formação</a>
+        <a href="pesquisa.html">Pesquisa</a>
+        <a href="3d.html">Oficina 3D</a>
+        <a href="index.html#contato">Contato</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Intro Section -->
+  <div class="intro-section">
+    <div class="wrap">
+      <div class="status-badge">
+        <div class="pulse-dot"></div>
+        Instalações e Operações em Conformidade
+      </div>
+      <div class="label">Direto do Campo</div>
+      <h2>Trabalho Real Registrado em Obra</h2>
+      <p class="sub">Registros fotográficos reais de instalações físicas, upgrades, comissionamento e ativações de telecomunicações, energia e redes que executei ou coordenei em campo.</p>
+    </div>
+  </div>
+
+  <!-- Gallery Section -->
+  <div class="gallery-section">
+    <div class="wrap">
+      <div class="gallery">
+        <figure>
+          <img src="img/campo-torre.jpg" alt="Site de telecomunicações - acesso e infraestrutura de rádio">
+          <figcaption><p><b>Estrutura de Rádio</b>Site de telecomunicações, acesso e infraestrutura técnica.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="img/campo-fibra.jpg" alt="Cabeamento óptico organizado em bastidor de fibra (ODF)">
+          <figcaption><p><b>Distribuição Óptica</b>Cabeamento óptico organizado em bastidor.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="img/campo-rack.jpg" alt="Instalação, identificação e comissionamento de equipamentos em rack padrão">
+          <figcaption><p><b>Organização de Rack</b>Instalação, identificação e integração de equipamentos ativos.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="img/campo-medicao.jpg" alt="Medição de corrente e testes elétricos preventivos na infraestrutura">
+          <figcaption><p><b>Testes Elétricos</b>Medições e testes de aceitação preventivos.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="img/campo-quadro.jpg" alt="Adequação e comissionamento de quadro de distribuição de energia CA/CC">
+          <figcaption><p><b>Distribuição Elétrica</b>Adequação e infraestrutura de energia de site.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="img/campo-painel.jpg" alt="Painel de interconexão física e roteamento de cabeamento de rede estruturado">
+          <figcaption><p><b>Cabeamento Estruturado</b>Painéis de interconexão física e roteamento estruturado.</p></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <section id="contato" class="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <div class="label">Contato</div>
+        <h2>Tem um projeto ou desafio? Vamos conversar.</h2>
+        <p class="sub" style="margin: 0 auto">Respostas ágeis, foco em viabilidade técnica e soluções sem enrolação comercial.</p>
+        
+        <div class="contact-grid">
+          <a class="contact-method" href="https://wa.me/5592984541436?text=Ol%C3%A1%20Bruno%2C%20vi%20seu%20site%20e%20quero%20conversar" target="_blank" rel="noopener">
+            <div class="contact-icon-wrapper">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <h4>WhatsApp</h4>
+            <p>(92) 98454-1436</p>
+          </a>
+
+          <div class="contact-method" id="copy-email-btn" onclick="copyEmail(event)">
+            <div class="contact-icon-wrapper">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+              </svg>
+            </div>
+            <h4>E-mail</h4>
+            <p>eng.brunoalima@gmail.com</p>
+          </div>
+
+          <a class="contact-method" href="https://www.linkedin.com/in/brunolima-engenheiro" target="_blank" rel="noopener">
+            <div class="contact-icon-wrapper">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </div>
+            <h4>LinkedIn</h4>
+            <p>Conectar no Perfil</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Bruno Amaral de Lima · Engenharia · CREA-AM 042086461-0</div>
+    <div>Manaus/AM · © 2026 · Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<!-- Lightbox Overlay -->
+<div id="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="Imagem ampliada">
+  <div id="lightbox-caption"></div>
+</div>
+
+<script>
+  // Dynamic Scroll Header
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('site-header');
+    if (window.scrollY > 20) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Native Lightbox Script
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    
+    // Select all photos in Gallery
+    const imagesToBind = document.querySelectorAll('.gallery img');
+    
+    imagesToBind.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        
+        // Find caption inside parents
+        let capContent = '';
+        const figure = img.closest('figure');
+        if (figure) {
+          const figcap = figure.querySelector('figcaption');
+          if (figcap) {
+            capContent = figcap.innerHTML;
+          }
+        }
+        
+        lightboxCaption.innerHTML = capContent;
+        lightbox.classList.add('active');
+      });
+    });
+    
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightboxImg.src = '';
+      lightboxCaption.innerHTML = '';
+    }
+    
+    document.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  });
+
+  // Clipboard Email Copy Function
+  function copyEmail(event) {
+    event.preventDefault();
+    const email = 'eng.brunoalima@gmail.com';
+    const btn = document.getElementById('copy-email-btn');
+    const originalText = btn.innerHTML;
+    
+    navigator.clipboard.writeText(email).then(() => {
+      btn.innerHTML = `
+        <div class="contact-icon-wrapper" style="background: rgba(34, 197, 94, 0.15); color: var(--success); border-color: rgba(34, 197, 94, 0.3)">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h4 style="color: var(--success)">Copiado!</h4>
+        <p>E-mail na área de transferência</p>
+      `;
+      btn.style.borderColor = 'var(--success)';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.borderColor = '';
+      }, 2000);
+    }).catch(err => {
+      console.error('Falha ao copiar: ', err);
+    });
+  }
+</script>
+
+</body>
+</html>

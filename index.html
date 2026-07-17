@@ -1259,7 +1259,7 @@
         <a href="#atuacao">Atuação</a>
         <a href="#trajetoria">Trajetória</a>
         <a href="skills.html">Skills</a>
-        <a href="#campo">Campo</a>
+        <a href="campo.html">Direto do Campo</a>
         <a href="formacao.html">Formação</a>
         <a href="pesquisa.html">Pesquisa</a>
         <a href="3d.html">Oficina 3D</a>
@@ -1508,7 +1508,18 @@
 
       <!-- Area 4 (Flipped) -->
       <div class="area flip">
-        <div class="pic"><img src="img/campo-medicao.jpg" alt="Medição elétrica com alicate amperímetro em campo"></div>
+        <div class="pic carousel-container" id="tech-carousel">
+          <div class="carousel-slides" id="tech-carousel-track">
+            <img src="img/tech-carousel/tech-1.png" alt="Desenvolvimento e Automação de Processos - Captura 1">
+            <img src="img/tech-carousel/tech-2.png" alt="Desenvolvimento e Automação de Processos - Captura 2">
+            <img src="img/tech-carousel/tech-3.png" alt="Desenvolvimento e Automação de Processos - Captura 3">
+            <img src="img/tech-carousel/tech-4.png" alt="Desenvolvimento e Automação de Processos - Captura 4">
+            <img src="img/tech-carousel/tech-5.png" alt="Desenvolvimento e Automação de Processos - Captura 5">
+          </div>
+          <button class="carousel-btn prev" onclick="moveTechCarousel(-1)" aria-label="Foto anterior">&lsaquo;</button>
+          <button class="carousel-btn next" onclick="moveTechCarousel(1)" aria-label="Próxima foto">&rsaquo;</button>
+          <div class="carousel-counter" id="tech-carousel-counter">1 / 5</div>
+        </div>
         <div class="txt">
           <h3>
             <svg class="icon-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -1539,44 +1550,6 @@
             </li>
           </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Section -->
-  <section id="campo">
-    <div class="wrap">
-      <div class="section-header">
-        <div class="label">Direto do campo</div>
-        <h2>Trabalho real registrado em obra</h2>
-        <p class="sub">Instalações, upgrades e ativações reais que executei ou coordenei. Clique nas fotos para ver detalhes e Legenda.</p>
-      </div>
-      
-      <div class="gallery">
-        <figure>
-          <img src="img/campo-torre.jpg" alt="Site de telecomunicações - acesso e infraestrutura de rádio">
-          <figcaption><p><b>Estrutura de Rádio</b>Site de telecomunicações, acesso e infraestrutura</p></figcaption>
-        </figure>
-        <figure>
-          <img src="img/campo-fibra.jpg" alt="Cabeamento óptico organizado em bastidor de fibra (ODF)">
-          <figcaption><p><b>Distribuição óptica</b>Cabeamento óptico organizado em bastidor</p></figcaption>
-        </figure>
-        <figure>
-          <img src="img/campo-rack.jpg" alt="Instalação, identificação e comissionamento de equipamentos em rack padrão">
-          <figcaption><p><b>Organização de Rack</b>Instalação e integração de equipamentos</p></figcaption>
-        </figure>
-        <figure>
-          <img src="img/campo-medicao.jpg" alt="Medição de corrente e testes elétricos preventivos na infraestrutura">
-          <figcaption><p><b>Testes Elétricos</b>Medições e testes de aceitação</p></figcaption>
-        </figure>
-        <figure>
-          <img src="img/campo-quadro.jpg" alt="Adequação e comissionamento de quadro de distribuição de energia CA/CC">
-          <figcaption><p><b>Distribuição Elétrica</b>Infraestrutura de energia do site</p></figcaption>
-        </figure>
-        <figure>
-          <img src="img/campo-painel.jpg" alt="Painel de interconexão física e roteamento de cabeamento de rede estruturado">
-          <figcaption><p><b>Cabeamento Estruturado</b>Painéis e distribuição de rede</p></figcaption>
-        </figure>
       </div>
     </div>
   </section>
@@ -1847,6 +1820,28 @@
     const offset = -currentEnergySlide * 100;
     track.style.transform = `translateX(${offset}%)`;
     counter.textContent = `${currentEnergySlide + 1} / ${totalEnergySlides}`;
+  }
+
+  // Tech Carousel Logic
+  let currentTechSlide = 0;
+  const totalTechSlides = 5;
+
+  function moveTechCarousel(direction) {
+    const track = document.getElementById('tech-carousel-track');
+    const counter = document.getElementById('tech-carousel-counter');
+    if (!track || !counter) return;
+
+    currentTechSlide += direction;
+
+    if (currentTechSlide < 0) {
+      currentTechSlide = totalTechSlides - 1;
+    } else if (currentTechSlide >= totalTechSlides) {
+      currentTechSlide = 0;
+    }
+
+    const offset = -currentTechSlide * 100;
+    track.style.transform = `translateX(${offset}%)`;
+    counter.textContent = `${currentTechSlide + 1} / ${totalTechSlides}`;
   }
 </script>
 
