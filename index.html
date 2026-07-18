@@ -1208,21 +1208,134 @@
     }
   }
 
-  @media(max-width: 767px) {
-    nav {
-      flex-direction: column;
-      height: auto;
-      padding: 16px 0;
-      gap: 12px;
-    }
-    
+  /* Hamburger Button */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 110;
+  }
+
+  .menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-bright);
+    border-radius: 9px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Nav Drawer (Menu Lateral) */
+  .nav-drawer {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    background: rgba(3, 7, 18, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid var(--line);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-drawer.active {
+    transform: translateX(-320px);
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .drawer-close {
+    background: transparent;
+    border: none;
+    color: var(--text-bright);
+    font-size: 2.2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.25s ease;
+  }
+
+  .drawer-close:hover {
+    color: var(--amber);
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .drawer-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border-left: 3px solid transparent;
+  }
+
+  .drawer-links a:hover,
+  .drawer-links a.active {
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.03);
+    border-left-color: var(--teal);
+    padding-left: 20px;
+  }
+
+  /* Drawer Backdrop Overlay */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 999;
+  }
+
+  .drawer-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 991px) {
     .nav-links {
-      gap: 16px;
+      display: none !important;
     }
     
+    .menu-toggle {
+      display: flex;
+    }
+  }
+
+  @media(max-width: 767px) {
     footer .wrap {
       flex-direction: column;
       text-align: center;
+      gap: 12px;
     }
   }
 
@@ -1265,9 +1378,38 @@
         <a href="3d.html">Oficina 3D</a>
         <a href="#contato">Contato</a>
       </div>
+      <!-- Hamburger Menu Button -->
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span class="bar" style="margin-bottom: 5px;"></span>
+        <span class="bar" style="margin-bottom: 5px;"></span>
+        <span class="bar"></span>
+      </button>
     </nav>
   </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-header">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      ENG. <b>BRUNO LIMA</b>
+    </div>
+    <button class="drawer-close" aria-label="Fechar menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="#atuacao">Atuação</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="skills.html">Skills</a>
+    <a href="campo.html">Direto do Campo</a>
+    <a href="formacao.html">Formação</a>
+    <a href="pesquisa.html">Pesquisa</a>
+    <a href="3d.html">Oficina 3D</a>
+    <a href="#contato">Contato</a>
+  </div>
+</div>
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
 
 <main>
   <!-- Hero Section -->
@@ -1770,6 +1912,32 @@
         closeLightbox();
       }
     });
+
+    // Mobile Nav Drawer Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navDrawer = document.getElementById('nav-drawer');
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawerClose = document.querySelector('.drawer-close');
+    const drawerLinks = document.querySelectorAll('.drawer-links a');
+
+    function openDrawer() {
+      navDrawer.classList.add('active');
+      drawerOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      menuToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      navDrawer.classList.remove('active');
+      drawerOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (menuToggle) menuToggle.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+    drawerLinks.forEach(link => link.addEventListener('click', closeDrawer));
   });
 
   // Clipboard Email Copy Function with Dynamic UX Feedback
